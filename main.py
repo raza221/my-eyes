@@ -3,8 +3,10 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename
 import os
 import subprocess
+from PIL import Image, ImageTk
 import cv2
 import pytesseract
+import sys
 from playsound import playsound 
 
 os.chdir(r"C:\Users\raza\Documents\PythonProjects\my-eyes")
@@ -12,7 +14,7 @@ os.chdir(r"C:\Users\raza\Documents\PythonProjects\my-eyes")
 def camera1():
     cam = cv2.VideoCapture(0)
     
-    cv2.namedWindow("Take a picture of the text.")
+    cv2.namedWindow("Press 'Escape' when you are done.")
     
     img_counter = 0
     
@@ -21,21 +23,22 @@ def camera1():
         if not ret:
             print("Failed to grab frame!")
             break
-        cv2.imshow("Take a picture of the text.", frame)
+        cv2.imshow("Press 'Escape' when you are done.", frame)
     
         k = cv2.waitKey(1)
-        if k%256 == 27:
-            # ESC pressed
-            global picture
-            picture = "image.png"
-            break
-        elif k%256 == 32:
+        
+        if k%256 == 32:
             # SPACE pressed
             img_name = "image.png"
             cv2.imwrite(img_name, frame)
             print("{} written!".format(img_name))
             img_counter += 1
-    
+        elif k%256 == 27:
+            # ESC pressed
+            global picture
+            picture = "image.png"
+            break
+
     cam.release()
     
     cv2.destroyAllWindows()
@@ -46,24 +49,32 @@ def pickfile():
     
 root = tk.Tk()
 root.title("MyRetina - Your Virtual Eyes")
+root.geometry("700x800")
 H = 700 
 W = 800
 
-background_image=tk.PhotoImage(r"C:\Users\raza\Documents\PythonProjects\my-eyes\bg.jpg")
-background_label = tk.Label(root, image=background_image)
-background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-canvas = tk.Canvas(root, height=H, width=W)
-canvas.pack()
+image = ImageTk.PhotoImage (Image.open("background.png"))
+bg = tk.Label(image=image)
+bg.place(x=0,y=0, relwidth=1, relheight=1)
 
-frame = tk.Frame(root, bg="#80c1ff")
-frame.place(relheight=1, relwidth=1)
 
-button = tk.Button(frame, text ="Take Photo", bg = "gray", fg="white", command=camera1)
-button.pack(expand=True,)
+#canvas = tk.Canvas(root, height=H, width=W)
+#canvas.pack()
 
-button = tk.Button(frame, text ="Choose from Photo Library", bg = "gray", fg="white", command=pickfile)
-button.pack(expand=True,)
+#frame = tk.Frame(root, bg="#80c1ff")
+#frame.place(relheight=1, relwidth=1)
+
+#root.attributes("-alpha", 0.9)
+
+button = tk.Button(bg, text ="Take Photo", bg = "black", fg="white", command=camera1)
+button.pack(expand=True)
+
+button = tk.Button(bg, text ="Choose from Photo Library", bg = "black", fg="white", command=pickfile)
+button.pack(expand=True)
+
+button = tk.Button(bg, text ="Exit", bg = "black", fg="red", command=sys.exit)
+button.pack(expand=True)
 
 
 root.mainloop()
