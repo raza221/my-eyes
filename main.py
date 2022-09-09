@@ -6,7 +6,7 @@ import cv2
 import pytesseract
 from playsound import playsound 
 
-os.chdir(r"C:\Users\raza\Documents\PythonProjects\OCRtoTTS")
+os.chdir(r"C:\Users\raza\Documents\PythonProjects\my-eyes")
 pytesseract.pytesseract.tesseract_cmd = (r'C:\Program Files\Tesseract-OCR\tesseract.exe')
 
 cam = cv2.VideoCapture(0)
@@ -39,7 +39,7 @@ cam.release()
 cv2.destroyAllWindows()
 
 # Grayscale, Gaussian blur, Otsu's threshold
-image = cv2.imread(r"C:\Users\raza\Documents\PythonProjects\OCRtoTTS\roadsigns.png")
+image = cv2.imread(r"C:\Users\raza\Documents\PythonProjects\my-eyes\roadsigns.png")
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blur = cv2.GaussianBlur(gray, (3,3), 0)
 thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
@@ -66,4 +66,4 @@ output = gTTS(text=myText, lang=language, slow=False, tld=accent)
 output.save("output.mp3")
 fh.close()
 
-playsound(r'C:\Users\raza\Documents\PythonProjects\OCRtoTTS\output.mp3')
+playsound(r'C:\Users\raza\Documents\PythonProjects\my-eyes\output.mp3')
