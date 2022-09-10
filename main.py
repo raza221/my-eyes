@@ -11,6 +11,8 @@ from playsound import playsound
 
 os.chdir(r"C:\Users\raza\Documents\PythonProjects\my-eyes")
 
+
+
 def camera1():
     cam = cv2.VideoCapture(0)
     
@@ -29,21 +31,21 @@ def camera1():
         
         if k%256 == 32:
             # SPACE pressed
-            img_name = "image.png"
+            img_name = (r"C:\Users\raza\Documents\PythonProjects\my-eyes\camera.png")
             cv2.imwrite(img_name, frame)
             print("{} written!".format(img_name))
             img_counter += 1
+            global picture
+            picture = (r"C:\Users\raza\Documents\PythonProjects\my-eyes\camera.png")
         elif k%256 == 27:
             # ESC pressed
-            global picture
-            picture = "image.png"
             break
 
     cam.release()
     
     cv2.destroyAllWindows()
 
-def pickfile():
+def pickfile(): 
     global picture
     picture = askopenfilename()
     
@@ -73,12 +75,10 @@ button.pack(expand=True)
 button = tk.Button(bg, text ="Choose from Photo Library", bg = "black", fg="white", command=pickfile)
 button.pack(expand=True)
 
-button = tk.Button(bg, text ="Exit", bg = "black", fg="red", command=sys.exit)
+button = tk.Button(bg, text ="Exit", bg = "black", fg="red", command=exit)
 button.pack(expand=True)
 
-
 root.mainloop()
-
 
 pytesseract.pytesseract.tesseract_cmd = (r'C:\Program Files\Tesseract-OCR\tesseract.exe')
 
@@ -94,7 +94,7 @@ opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=1)
 invert = 255 - opening
 
 # Perform text extraction
-data = pytesseract.image_to_string(image)
+data = pytesseract.image_to_string(picture)
 text_file = open("text.txt", "w")
 text_file.write(data)
 text_file.close()
@@ -111,4 +111,4 @@ output = gTTS(text=myText, lang=language, slow=False, tld=accent)
 output.save("output.mp3")
 fh.close()
 
-playsound(r'output.mp3')
+playsound(r"C:\Users\raza\Documents\PythonProjects\my-eyes\output.mp3")
