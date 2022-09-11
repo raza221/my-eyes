@@ -69,18 +69,18 @@ bg.place(x=0,y=0, relwidth=1, relheight=1)
 
 #root.attributes("-alpha", 0.9)
 
-button = tk.Button(bg, text ="Take Photo", bg = "black", fg="white", command=camera1)
-button.pack(expand=True)
+button = tk.Button(bg, text ="Take Photo", bg = "white", fg="black", command=camera1)
+button.pack(expand=True, fill=tk.X)
 
-button = tk.Button(bg, text ="Choose from Photo Library", bg = "black", fg="white", command=pickfile)
-button.pack(expand=True)
+button = tk.Button(bg, text ="Choose from Photo Library", bg = "white", fg="black", command=pickfile)
+button.pack(expand=True, fill=tk.X)
 
-button = tk.Button(bg, text ="Exit", bg = "black", fg="red", command=exit)
-button.pack(expand=True)
+button = tk.Button(bg, text ="Exit", bg = "white", fg="red", command=exit)
+button.pack(expand=True, fill=tk.X)
 
 root.mainloop()
 
-pytesseract.pytesseract.tesseract_cmd = (r'C:\Program Files\Tesseract-OCR\tesseract.exe')
+pytesseract.pytesseract.tesseract_cmd = (r'Tesseract-OCR\tesseract.exe')
 
 
 # Grayscale, Gaussian blur, Otsu's threshold
@@ -111,4 +111,4 @@ output = gTTS(text=myText, lang=language, slow=False, tld=accent)
 output.save("output.mp3")
 fh.close()
 
-playsound(r"C:\Users\raza\Documents\PythonProjects\my-eyes\output.mp3")
+playsound(r"output.mp3")
